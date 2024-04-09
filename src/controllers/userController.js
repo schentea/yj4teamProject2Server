@@ -111,7 +111,7 @@ export const allergyAlim = async (req, res) => {
     try {
         const response = await messageService.send({
             to: tel,
-            from: '계정에서 등록한 발신번호 입력', // 발신번호를 정확하게 입력해주세요.
+            from: '01033528779', // 계정에서 등록한 발신번호 입력.
             kakaoOptions: {
                 pfId: PFID,
                 templateId: TID,
