@@ -41,6 +41,7 @@ export const memberRegister = async (req, res) => {
             password: hashedPassword,
             region: region,
             allergies: allergies,
+            subscribe: false,
             createdAt: new Date(),
         });
 
@@ -106,8 +107,12 @@ export const allergyAlim = async (req, res) => {
     console.log(req.body);
 
     const {
-        body: { username, tel },
+        body: { username, tel, subscribe, uid },
     } = req;
+    const userData = await User.findOne({ userid: uid });
+    userData.subscribe = subscribe;
+    await userData.save();
+
     try {
         const response = await messageService.send({
             to: tel,

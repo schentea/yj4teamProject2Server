@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
     schoolNM: String,
     region: String,
     allergies: String,
+    subscribe: Boolean,
     createdAt: Date,
 });
 
