@@ -77,7 +77,7 @@ export const memberLogin = async (req, res) => {
   // 패스워드가 맞으면 로그인
   if (ok) {
     // 로그인
-    res.send({ result: true, token: user?._id });
+    res.send({ result: true, token: user?._id, schoolNM: user?.schoolNM, region: user?.region, userAllergy: user?.allergies });
   }
 };
 
