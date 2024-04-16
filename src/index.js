@@ -10,7 +10,7 @@ import userRouter from './routers/userRotuer';
 const PORT = process.env.PORT; //서버를 올릴때 제공해주는 주소를 받기 위해 변수로 지정
 const app = express();
 const corsOptions = {
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'https://kidcare.netlify.app'],
     credentials: true,
     method: ['GET', 'POST'],
 };
