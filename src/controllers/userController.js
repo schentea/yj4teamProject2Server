@@ -188,7 +188,7 @@ export const kakaoLogin = async (req, res) => {
         const user = await User.findOne({ email });
         if (user) {
             // 로그인
-            res.send({ result: true, user: user, isLogin: true });
+            res.send({ result: true, user: user, isLogin: true, token: user._id });
         } else {
             // 회원가입
             const userData = await User.create({
