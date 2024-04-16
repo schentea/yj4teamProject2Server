@@ -188,28 +188,19 @@ export const kakaoLogin = async (req, res) => {
         const user = await User.findOne({ email });
         if (user) {
             // 로그인
-            req.session.save(() => {
-                req.session.user = {
-                    username: user.username,
-                    email: user.email,
-                    // profileImage: user.profileImage,
-                };
-                const data = req.session;
-                console.log(data);
-                res.send({ result: true, data: data });
-            });
+            res.send({ result: true, user: user, isLogin: true });
         } else {
             // 회원가입
             const userData = await User.create({
-                username: nickname,
+                userid: nickname,
                 email,
                 // profileImage: profile_image,
                 createdAt: Date.now(),
             });
             res.send({ result: true, data: userData, message: '회원가입 완료!' });
         }
-
-        // 이메일 값이 DB에 없으면
-        // 회원가입
     }
+
+    // 이메일 값이 DB에 없으면
+    // 회원가입
 };
