@@ -246,10 +246,8 @@ export const googleLogin = async (req, res) => {
         });
         const userData = await userRequest.json();
         console.log(userData);
-        const {
-            email: { email },
-            name: { name },
-        } = userData;
+        const email = userData.email;
+        const name = userData.name;
         console.log(email);
         const user = await User.findOne({ email });
         if (user) {
