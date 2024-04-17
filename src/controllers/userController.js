@@ -249,13 +249,14 @@ export const googleLogin = async (req, res) => {
         const email = userData.email;
         const name = userData.name;
         console.log(email);
-        const user = await User.findOne({ email });
+        let userExamId = email.split('@')[0];
+        const user = await User.findOne({ email, userid: userExamId });
         if (user) {
             // 로그인
             res.send({ result: true, user: user, isLogin: true, token: user._id });
         } else {
             // 회원가입
-            let userExamId = email.split('@')[0];
+
             const userData = await User.create({
                 userid: userExamId,
                 username: name,
