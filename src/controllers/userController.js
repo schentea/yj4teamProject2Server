@@ -246,5 +246,34 @@ export const googleLogin = async (req, res) => {
         });
         const userData = await userRequest.json();
         console.log(userData);
+        const {
+            email: { email },
+            name: { name },
+        } = userData;
+
+        const user = await User.findOne({ email });
+        if (user) {
+            // 로그인
+            res.send({ result: true, user: user, isLogin: true, token: user._id });
+        } else {
+            // 회원가입
+            let userExamId = email.split('@')[0];
+            const userData = await User.create({
+                userid: userExamId,
+                username: name,
+                tel: '수정',
+                schoolNM: '수정',
+                region: '수정',
+                allergies: '수정',
+                subscribe: false,
+                email,
+                state: 'google',
+                // profileImage: profile_image,
+                createdAt: Date.now(),
+            });
+            const loginUser = await User.findOne({ email });
+
+            res.send({ result: true, isLogin: true, user: loginUser, token: loginUser._id, message: '회원가입 완료!' });
+        }
     }
 };
