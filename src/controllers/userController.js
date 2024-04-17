@@ -215,3 +215,27 @@ export const kakaoLogin = async (req, res) => {
     // 이메일 값이 DB에 없으면
     // 회원가입
 };
+
+export const googleLogin = async (req, res) => {
+    const {
+        query: { code },
+    } = req;
+    const GOOGLE_BASE_PATH = 'https://oauth2.googleapis.com/token';
+    const config = {
+        code,
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        client_secret: process.env.GOOGLE_SECRET_ID,
+        redirect_uri: process.env.GOOGLE_REDIRECT_URL,
+        grant_type: 'authorization_code',
+    };
+    const params = new URLSearchParams(config).toString();
+    const finalUrl = `${GOOGLE_BASE_PATH}?${params}`;
+    const data = await fetch(finalUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    });
+    const tokenRequest = await data.json();
+    console.log(tokenRequest);
+};
