@@ -250,7 +250,7 @@ export const googleLogin = async (req, res) => {
             email: { email },
             name: { name },
         } = userData;
-
+        console.log(email);
         const user = await User.findOne({ email });
         if (user) {
             // 로그인
