@@ -284,10 +284,12 @@ export const defaultInfoEdit = async (req,res) => {
     const {
         body : {tel, password,userid}
     } = req
+    const salt = bcrypt.genSaltSync(5);
+        const hashedPassword = bcrypt.hashSync(password, salt);
     const userData =await User.findOne({userid})
     try {
         userData.tel = tel
-        userData.password = password
+        userData.password = hashedPassword
         await userData.save();
     } catch (error) {
         console.log(error)
