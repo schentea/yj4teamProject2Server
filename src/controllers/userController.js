@@ -237,5 +237,14 @@ export const googleLogin = async (req, res) => {
         },
     });
     const tokenRequest = await data.json();
-    console.log(tokenRequest);
+    const { access_token } = tokenRequest;
+    if (access_token) {
+        const userRequest = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+            },
+        });
+        const userData = await userRequest.json();
+        console.log(userData);
+    }
 };
