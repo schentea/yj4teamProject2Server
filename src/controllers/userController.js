@@ -282,9 +282,17 @@ export const googleLogin = async (req, res) => {
 export const defaultInfoEdit = async (req,res) => {
     console.log(req.body)
     const {
-        body : {tel, password}
+        body : {tel, password,userid}
     } = req
-}
+    const userData =await User.findOne({userid})
+    try {
+        userData.tel = tel
+        userData.password = password
+        await userData.save();
+    } catch (error) {
+        console.log(error)
+    } 
+}   
 // 알러지 정보 수정
 export const allergiesEdit = async (req,res) => {
 
