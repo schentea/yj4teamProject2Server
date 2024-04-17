@@ -280,7 +280,6 @@ export const googleLogin = async (req, res) => {
 };
 // 기본정보 수정
 export const defaultInfoEdit = async (req,res) => {
-    console.log(req.body)
     const {
         body : {tel, password,userid}
     } = req
@@ -297,11 +296,11 @@ export const defaultInfoEdit = async (req,res) => {
 }   
 // 알러지 정보 수정
 export const allergiesEdit = async (req,res) => {
-
+    console.log("1",req.body)
 }
 // 지역,학교 정보 수정
 export const regionSchoolEdit = async (req,res) => {
-
+    console.log("2",req.body)
 }
 export const profileEdit = async (req, res) => {
     //값 받기
