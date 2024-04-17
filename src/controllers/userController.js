@@ -197,7 +197,7 @@ export const kakaoLogin = async (req, res) => {
                 userid: userExamId,
                 username: nickname,
                 tel: '수정',
-                SchoolNM: '수정',
+                schoolNM: '수정',
                 region: '수정',
                 allergies: '수정',
                 subscribe: false,
