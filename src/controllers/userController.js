@@ -206,7 +206,9 @@ export const kakaoLogin = async (req, res) => {
                 // profileImage: profile_image,
                 createdAt: Date.now(),
             });
-            res.send({ result: true, isLogin: true, user: userData, message: '회원가입 완료!' });
+            const loginUser = await User.findOne({ email });
+
+            res.send({ result: true, isLogin: true, user: loginUser, token: loginUser._id, message: '회원가입 완료!' });
         }
     }
 
