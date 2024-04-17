@@ -47,6 +47,7 @@ export const memberRegister = async (req, res) => {
             region: region,
             allergies: allergies,
             subscribe: false,
+            state: 'basic',
             createdAt: new Date(),
         });
 
@@ -191,9 +192,17 @@ export const kakaoLogin = async (req, res) => {
             res.send({ result: true, user: user, isLogin: true, token: user._id });
         } else {
             // 회원가입
+            let userExamId = email.split('@')[0];
             const userData = await User.create({
-                userid: nickname,
+                userid: userExamId,
+                username: nickname,
+                tel: '수정',
+                SchoolNM: '수정',
+                region: '수정',
+                allergies: '수정',
+                subscribe: false,
                 email,
+                state: 'kakao',
                 // profileImage: profile_image,
                 createdAt: Date.now(),
             });
