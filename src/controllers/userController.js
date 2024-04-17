@@ -278,7 +278,21 @@ export const googleLogin = async (req, res) => {
         }
     }
 };
+// 기본정보 수정
+export const defaultInfoEdit = async (req,res) => {
+    console.log(req.body)
+    const {
+        body : {tel, password}
+    } = req
+}
+// 알러지 정보 수정
+export const allergiesEdit = async (req,res) => {
 
+}
+// 지역,학교 정보 수정
+export const regionSchoolEdit = async (req,res) => {
+
+}
 export const profileEdit = async (req, res) => {
     //값 받기
     try {
