@@ -297,10 +297,28 @@ export const defaultInfoEdit = async (req,res) => {
 // 알러지 정보 수정
 export const allergiesEdit = async (req,res) => {
     console.log("1",req.body)
+    const userid = req.body.userid
+    const allergies = req.body.selectedAllergies.join(',');
+    const userData = await User.findOne({userid})
+    try {
+        userData.allergies =allergies
+        await userData.save();
+    }catch(e) {
+        console.log(e)
+    }
 }
 // 지역,학교 정보 수정
 export const regionSchoolEdit = async (req,res) => {
     console.log("2",req.body)
+    const {region, schoolNM, userid} =req.body
+    const userData = await User.findOne({userid})
+    try {
+        userData.region =region
+        userData.schoolNM = schoolNM
+        await userData.save();
+    } catch (error) {
+        console.log(e)
+    }
 }
 export const profileEdit = async (req, res) => {
     //값 받기
