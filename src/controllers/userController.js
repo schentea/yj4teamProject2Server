@@ -216,6 +216,7 @@ export const kakaoLogin = async (req, res) => {
     // 회원가입
 };
 
+//구글 로그인
 export const googleLogin = async (req, res) => {
     const {
         query: { code },
@@ -275,5 +276,13 @@ export const googleLogin = async (req, res) => {
 
             res.send({ result: true, isLogin: true, user: loginUser, token: loginUser._id, message: '회원가입 완료!' });
         }
+    }
+};
+
+export const profileEdit = async (req, res) => {
+    //값 받기
+    try {
+    } catch (error) {
+        console.log(error);
     }
 };

@@ -7,6 +7,7 @@ import {
     kakaoLogin,
     allergyAlim,
     googleLogin,
+    profileEdit,
 } from '../controllers/userController';
 
 const userRouter = express.Router();
@@ -18,5 +19,6 @@ userRouter.post('/logout', logout);
 userRouter.get('/socials/kakao', kakaoLogin);
 userRouter.post('/allergyAlim', allergyAlim);
 userRouter.get('/socials/google', googleLogin);
+userRouter.post('/profileEdit', profileEdit);
 
 export default userRouter;
