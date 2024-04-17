@@ -249,8 +249,9 @@ export const googleLogin = async (req, res) => {
         const email = userData.email;
         const name = userData.name;
         console.log(email);
-        let userExamId = email.split('@')[0];
-        const user = await User.findOne({ userExamId });
+        let userExamId = email.split('@')[0].substring(0, 3);
+
+        const user = await User.findOne({ email });
         if (user) {
             // 로그인
             res.send({ result: true, user: user, isLogin: true, token: user._id });
