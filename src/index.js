@@ -40,11 +40,4 @@ app.use('/users', userRouter);
 
 app.listen(PORT, async () => {
     console.log(`Server is Listen on http://localhost:${PORT}`);
-    db.User.find({ subscribe: true }, (error, users) => {
-        if (error) {
-            console.error('Error finding users with subscribe true:', error);
-        } else {
-            console.log('Users with subscribe true:', users);
-        }
-    });
 });
