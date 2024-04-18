@@ -369,8 +369,8 @@ export const regionSchoolEdit = async (req, res) => {
 //프로필 이미지
 export const profileEdit = async (req, res) => {
     //값 받기
-    const { file } = req;
-    console.log(file);
+
+    console.log(req.body);
     //try {
     //} catch (error) {
     //   console.log(error);
