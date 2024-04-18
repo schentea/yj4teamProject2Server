@@ -316,7 +316,13 @@ export const regionSchoolEdit = async (req, res) => {
         userData.region = region;
         userData.schoolNM = schoolNM;
         await userData.save();
-        res.send({ result: true });
+        res.send({
+            result: true,
+            token: userData?._id,
+            schoolNM: userData?.schoolNM,
+            region: userData?.region,
+            userAllergy: userData?.allergies,
+        });
     } catch (error) {
         console.log(e);
     }
