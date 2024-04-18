@@ -1,9 +1,7 @@
 import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
-import './db';
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
+import db from './db';
 import morgan from 'morgan';
 import userRouter from './routers/userRotuer';
 
@@ -40,4 +38,13 @@ app.get('/', function (req, res) {
 });
 app.use('/users', userRouter);
 
-app.listen(PORT, () => console.log(`Server is Listen on http://localhost:${PORT}`));
+app.listen(PORT, async () => {
+    console.log(`Server is Listen on http://localhost:${PORT}`);
+    db.User.find({ subscribe: true }, (error, users) => {
+        if (error) {
+            console.error('Error finding users with subscribe true:', error);
+        } else {
+            console.log('Users with subscribe true:', users);
+        }
+    });
+});
