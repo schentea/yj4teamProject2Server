@@ -378,7 +378,7 @@ export const newUserData = async (req, res) => {};
 
 export async function meal(region, schoolNM, tomorrowDate, userAllergy, username, tel, schoolName) {
     const mealRes = await fetch(
-        `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=009dae03a2d04006bd984064746a9d85&Type=json&ATPT_OFCDC_SC_CODE=${region}&SD_SCHUL_CODE=${schoolNM}&MLSV_YMD=${tomorrowDate}`
+        `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=${process.env.API_KEY}&Type=json&ATPT_OFCDC_SC_CODE=${region}&SD_SCHUL_CODE=${schoolNM}&MLSV_YMD=${tomorrowDate}`
     ).then((res) => res.json());
 
     const mealData =
