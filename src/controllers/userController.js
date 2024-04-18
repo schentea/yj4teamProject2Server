@@ -290,6 +290,13 @@ export const defaultInfoEdit = async (req, res) => {
         userData.tel = tel;
         userData.password = hashedPassword;
         await userData.save();
+        res.send({
+            result: true,
+            token: userData?._id,
+            schoolNM: userData?.schoolNM,
+            region: userData?.region,
+            userAllergy: userData?.allergies,
+        });
     } catch (error) {
         console.log(error);
     }
@@ -303,6 +310,13 @@ export const allergiesEdit = async (req, res) => {
     try {
         userData.allergies = allergies;
         await userData.save();
+        res.send({
+            result: true,
+            token: userData?._id,
+            schoolNM: userData?.schoolNM,
+            region: userData?.region,
+            userAllergy: userData?.allergies,
+        });
     } catch (e) {
         console.log(e);
     }
