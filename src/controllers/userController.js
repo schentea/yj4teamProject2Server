@@ -5,7 +5,30 @@ import { SolapiMessageService } from 'solapi';
 
 const PFID = process.env.PFID;
 const TID = process.env.TID;
+const PFID2 = process.env.PFID2;
+const TID2 = process.env.TID2;
 const messageService = new SolapiMessageService(process.env.SOLAPI_API_KEY, process.env.SOLAPI_SECRET_KEY);
+let noFood = {
+    1: '달걀',
+    2: '우유',
+    3: '메밀',
+    4: '땅콩',
+    5: '대두',
+    6: '밀',
+    7: '고등어',
+    8: '게',
+    9: '새우',
+    10: '돼지고기',
+    11: '복숭아',
+    12: '토마토',
+    13: '아황산',
+    14: '호두',
+    15: '닭고기',
+    16: '쇠고기',
+    17: '오징어',
+    18: '조개류.굴.홍합.전복',
+    19: '잣',
+};
 // 회원가입
 export const memberRegister = async (req, res) => {
     console.log(req.body);
@@ -352,3 +375,55 @@ export const profileEdit = async (req, res) => {
     }
 };
 export const newUserData = async (req, res) => {};
+
+export async function meal(region, schoolNM, tomorrowDate, userAllergy, username, tel, schoolName) {
+    const mealRes = await fetch(
+        `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=009dae03a2d04006bd984064746a9d85&Type=json&ATPT_OFCDC_SC_CODE=${region}&SD_SCHUL_CODE=${schoolNM}&MLSV_YMD=${tomorrowDate}`
+    ).then((res) => res.json());
+
+    const mealData =
+        mealRes.mealServiceDietInfo &&
+        mealRes.mealServiceDietInfo[1]?.row &&
+        mealRes.mealServiceDietInfo[1].row[0]?.DDISH_NM
+            ? mealRes.mealServiceDietInfo[1].row[0].DDISH_NM
+            : '';
+
+    const str = mealData.split('(');
+    const arr = str.map((item) => item.split(/[).<br/>]/));
+    const arr2 = arr.flatMap((item) => item).filter((item) => !isNaN(item) && item !== '');
+
+    const allergylist = arr2.map((item) => noFood[item]);
+    const allergy = [...new Set(allergylist)];
+
+    let mealAndUserAllerrgies = [];
+
+    allergy.map((item) => {
+        if (userAllergy.includes(item)) {
+            mealAndUserAllerrgies.push(item);
+        }
+    });
+    mealAndUserAllerrgies = mealAndUserAllerrgies.join();
+
+    if (mealAndUserAllerrgies) {
+        try {
+            const response = await messageService.send({
+                to: tel,
+                from: '01033528779', // 계정에서 등록한 발신번호 입력.
+                kakaoOptions: {
+                    pfId: PFID2,
+                    templateId: TID2,
+                    variables: {
+                        '#{name}': username,
+                        '#{SchoolNM}': schoolName,
+                        '#{allergies}': mealAndUserAllerrgies,
+                        '#{링크}': 'kidcare.netlify.app',
+                    },
+                    disableSms: true, // 필요에 따라 disableSms 옵션 사용
+                },
+            });
+            console.log('알림톡 전송성공');
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}

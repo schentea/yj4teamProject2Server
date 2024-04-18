@@ -1,9 +1,11 @@
 import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
-import db from './db';
 import morgan from 'morgan';
 import userRouter from './routers/userRotuer';
+import User from './models/user.js';
+import db from './db.js';
+import { meal } from './controllers/userController.js';
 
 const PORT = process.env.PORT; //서버를 올릴때 제공해주는 주소를 받기 위해 변수로 지정
 const app = express();
@@ -11,6 +13,25 @@ const corsOptions = {
     origin: ['http://localhost:3000', 'https://kidcare.netlify.app'],
     credentials: true,
     method: ['GET', 'POST'],
+};
+let location = {
+    서울: 'B10',
+    부산: 'C10',
+    대구: 'D10',
+    인천: 'E10',
+    광주: 'F10',
+    대전: 'G10',
+    울산: 'H10',
+    세종시: 'I10',
+    경기도: 'J10',
+    강원도: 'K10',
+    충청북도: 'M10',
+    충청남도: 'N10',
+    전라북도: 'P10',
+    전라남도: 'Q10',
+    경상북도: 'R10',
+    경상남도: 'S10',
+    제주도: 'T10',
 };
 
 app.use(cors(corsOptions));
@@ -40,4 +61,24 @@ app.use('/users', userRouter);
 
 app.listen(PORT, async () => {
     console.log(`Server is Listen on http://localhost:${PORT}`);
+
+    const subUser = await db.User.find({ subscribe: true }, 'username tel allergies schoolNM region');
+    const arrUser = [...subUser];
+    const nowDate = new Date();
+    const year = nowDate.getFullYear();
+    const month = String(nowDate.getMonth() + 1).padStart(2, '0');
+    const date = String(nowDate.getDate() + 1).padStart(2, '0');
+    const tomorrowDate = `${year}${month}${date}`;
+
+    arrUser.map((item) => {
+        meal(
+            location[item.region],
+            item.schoolNM.split(',')[1],
+            tomorrowDate,
+            item.allergies,
+            item.username,
+            item.tel,
+            item.schoolNM.split(',')[0]
+        );
+    });
 });
