@@ -369,10 +369,12 @@ export const regionSchoolEdit = async (req, res) => {
 //프로필 이미지
 export const profileEdit = async (req, res) => {
     //값 받기
-    try {
-    } catch (error) {
-        console.log(error);
-    }
+    const { file } = req;
+    console.log(file);
+    //try {
+    //} catch (error) {
+    //   console.log(error);
+    //}
 };
 export const newUserData = async (req, res) => {};
 
