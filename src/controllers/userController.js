@@ -279,47 +279,49 @@ export const googleLogin = async (req, res) => {
     }
 };
 // 기본정보 수정
-export const defaultInfoEdit = async (req,res) => {
+export const defaultInfoEdit = async (req, res) => {
     const {
-        body : {tel, password,userid}
-    } = req
+        body: { tel, password, userid },
+    } = req;
     const salt = bcrypt.genSaltSync(5);
-        const hashedPassword = bcrypt.hashSync(password, salt);
-    const userData =await User.findOne({userid})
+    const hashedPassword = bcrypt.hashSync(password, salt);
+    const userData = await User.findOne({ userid });
     try {
-        userData.tel = tel
-        userData.password = hashedPassword
+        userData.tel = tel;
+        userData.password = hashedPassword;
         await userData.save();
     } catch (error) {
-        console.log(error)
-    } 
-}   
+        console.log(error);
+    }
+};
 // 알러지 정보 수정
-export const allergiesEdit = async (req,res) => {
-    console.log("1",req.body)
-    const userid = req.body.userid
+export const allergiesEdit = async (req, res) => {
+    console.log('1', req.body);
+    const userid = req.body.userid;
     const allergies = req.body.selectedAllergies.join(',');
-    const userData = await User.findOne({userid})
+    const userData = await User.findOne({ userid });
     try {
-        userData.allergies =allergies
+        userData.allergies = allergies;
         await userData.save();
-    }catch(e) {
-        console.log(e)
+    } catch (e) {
+        console.log(e);
     }
-}
+};
 // 지역,학교 정보 수정
-export const regionSchoolEdit = async (req,res) => {
-    console.log("2",req.body)
-    const {region, schoolNM, userid} =req.body
-    const userData = await User.findOne({userid})
+export const regionSchoolEdit = async (req, res) => {
+    console.log('2', req.body);
+    const { region, schoolNM, userid } = req.body;
+    const userData = await User.findOne({ userid });
     try {
-        userData.region =region
-        userData.schoolNM = schoolNM
+        userData.region = region;
+        userData.schoolNM = schoolNM;
         await userData.save();
+        res.send({ result: true });
     } catch (error) {
-        console.log(e)
+        console.log(e);
     }
-}
+};
+//프로필 이미지
 export const profileEdit = async (req, res) => {
     //값 받기
     try {
@@ -327,3 +329,4 @@ export const profileEdit = async (req, res) => {
         console.log(error);
     }
 };
+export const newUserData = async (req, res) => {};
