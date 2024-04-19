@@ -436,11 +436,12 @@ export async function meal(region, schoolNM, tomorrowDate, userAllergy, username
 }
 //구독설정
 export const userSubSetting = async (req,res) => {
-    const { data,user} =req.body
+    const { data,user } =req.body
     console.log("asd",user)
     console.log("asd",data)
-    const userData = await User.findOne({ user });
     try {
+        const userData = await User.findOne({ user });
+        console.log(userData.subscribe)
         userData.subscribe = data
         await userData.save();
         res.send({
