@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import User from '../models/user';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { SolapiMessageService } from 'solapi';
 
 const PFID = process.env.PFID;

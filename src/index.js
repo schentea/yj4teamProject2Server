@@ -3,7 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
 import userRouter from './routers/userRotuer';
-import User from './models/user.js';
+import schedule from 'node-schedule';
 import db from './db.js';
 import { meal } from './controllers/userController.js';
 
@@ -53,6 +53,33 @@ app.use(express.json());
 //         }),
 //     })
 // );
+schedule.scheduleJob('0 21 * * *', function () {
+    db.User.find({ subscribe: true }, 'username tel allergies schoolNM region')
+        .then(async (subUser) => {
+            const arrUser = [...subUser];
+            const nowDate = new Date();
+            const year = nowDate.getFullYear();
+            const month = String(nowDate.getMonth() + 1).padStart(2, '0');
+            const date = String(nowDate.getDate() + 1).padStart(2, '0');
+            const tomorrowDate = `${year}${month}${date}`;
+
+            for (const item of arrUser) {
+                await meal(
+                    location[item.region],
+                    item.schoolNM.split(',')[1],
+                    tomorrowDate,
+                    item.allergies,
+                    item.username,
+                    item.tel,
+                    item.schoolNM.split(',')[0]
+                );
+            }
+            console.log('작업 완료');
+        })
+        .catch((err) => {
+            console.error('DB 쿼리 에러:', err);
+        });
+});
 
 app.get('/', function (req, res) {
     res.send('Hello World!!!!!');
@@ -61,24 +88,4 @@ app.use('/users', userRouter);
 
 app.listen(PORT, async () => {
     console.log(`Server is Listen on http://localhost:${PORT}`);
-
-    const subUser = await db.User.find({ subscribe: true }, 'username tel allergies schoolNM region');
-    const arrUser = [...subUser];
-    const nowDate = new Date();
-    const year = nowDate.getFullYear();
-    const month = String(nowDate.getMonth() + 1).padStart(2, '0');
-    const date = String(nowDate.getDate() + 1).padStart(2, '0');
-    const tomorrowDate = `${year}${month}${date}`;
-
-    arrUser.map((item) => {
-        meal(
-            location[item.region],
-            item.schoolNM.split(',')[1],
-            tomorrowDate,
-            item.allergies,
-            item.username,
-            item.tel,
-            item.schoolNM.split(',')[0]
-        );
-    });
 });
