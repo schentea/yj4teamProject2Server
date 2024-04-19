@@ -54,8 +54,8 @@ app.use(express.json());
 //     })
 // );
 const rule = new schedule.RecurrenceRule();
-rule.hour = 14;
-rule.minute = 15;
+rule.hour = 16;
+rule.minute = 30;
 rule.tz = 'Asia/Seoul';
 schedule.scheduleJob(rule, async function () {
     const subUser = await db.User.find({ subscribe: true }, 'username tel allergies schoolNM region');
@@ -64,7 +64,7 @@ schedule.scheduleJob(rule, async function () {
     const nowDate = new Date();
     const year = nowDate.getFullYear();
     const month = String(nowDate.getMonth() + 1).padStart(2, '0');
-    const date = String(nowDate.getDate() + 3).padStart(2, '0');
+    const date = String(nowDate.getDate() + 1).padStart(2, '0');
     const tomorrowDate = `${year}${month}${date}`;
     console.log(tomorrowDate);
     arrUser.map((item) => {
