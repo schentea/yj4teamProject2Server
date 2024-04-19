@@ -53,33 +53,28 @@ app.use(express.json());
 //         }),
 //     })
 // );
-schedule.scheduleJob('16 13 * * *', function () {
-    db.User.find({ subscribe: true }, 'username tel allergies schoolNM region')
-        .then(async (subUser) => {
-            const arrUser = [...subUser];
-            const nowDate = new Date();
-            const year = nowDate.getFullYear();
-            const month = String(nowDate.getMonth() + 1).padStart(2, '0');
-            const date = String(nowDate.getDate() + 3).padStart(2, '0');
-            console.log(date);
-            const tomorrowDate = `${year}${month}${date}`;
-
-            for (const item of arrUser) {
-                await meal(
-                    location[item.region],
-                    item.schoolNM.split(',')[1],
-                    tomorrowDate,
-                    item.allergies,
-                    item.username,
-                    item.tel,
-                    item.schoolNM.split(',')[0]
-                );
-            }
-            console.log('작업 완료');
-        })
-        .catch((err) => {
-            console.error('DB 쿼리 에러:', err);
-        });
+schedule.scheduleJob('30 13 * * *', async function () {
+    const subUser = await db.User.find({ subscribe: true }, 'username tel allergies schoolNM region');
+    const arrUser = [...subUser];
+    console.log(arrUser);
+    const nowDate = new Date();
+    const year = nowDate.getFullYear();
+    const month = String(nowDate.getMonth() + 1).padStart(2, '0');
+    const date = String(nowDate.getDate() + 3).padStart(2, '0');
+    const tomorrowDate = `${year}${month}${date}`;
+    console.log(tomorrowDate);
+    arrUser.map((item) => {
+        meal(
+            location[item.region],
+            item.schoolNM.split(',')[1],
+            tomorrowDate,
+            item.allergies,
+            item.username,
+            item.tel,
+            item.schoolNM.split(',')[0]
+        );
+    });
+    console.log('go');
 });
 
 app.get('/', function (req, res) {
