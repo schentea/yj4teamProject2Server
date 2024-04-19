@@ -53,14 +53,14 @@ app.use(express.json());
 //         }),
 //     })
 // );
-schedule.scheduleJob('0 21 * * *', function () {
+schedule.scheduleJob('51 12 * * *', function () {
     db.User.find({ subscribe: true }, 'username tel allergies schoolNM region')
         .then(async (subUser) => {
             const arrUser = [...subUser];
             const nowDate = new Date();
             const year = nowDate.getFullYear();
             const month = String(nowDate.getMonth() + 1).padStart(2, '0');
-            const date = String(nowDate.getDate() + 1).padStart(2, '0');
+            const date = String(nowDate.getDate() + 3).padStart(2, '0');
             const tomorrowDate = `${year}${month}${date}`;
 
             for (const item of arrUser) {
