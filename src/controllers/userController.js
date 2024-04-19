@@ -367,7 +367,7 @@ export const regionSchoolEdit = async (req, res) => {
             subscribe : userData?.subscribe
         });
     } catch (error) {
-        console.log(e);
+        console.log(error);
     }
 };
 //프로필 이미지
@@ -435,6 +435,6 @@ export async function meal(region, schoolNM, tomorrowDate, userAllergy, username
     }
 }
 //구독설정
-export const userSubSetting = async (res,req) => {
+export const userSubSetting = async (req,res) => {
     console.log(req.body)
 }
