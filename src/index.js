@@ -53,7 +53,7 @@ app.use(express.json());
 //         }),
 //     })
 // );
-schedule.scheduleJob('51 12 * * *', function () {
+schedule.scheduleJob('5 13 * * *', function () {
     db.User.find({ subscribe: true }, 'username tel allergies schoolNM region')
         .then(async (subUser) => {
             const arrUser = [...subUser];
@@ -61,6 +61,7 @@ schedule.scheduleJob('51 12 * * *', function () {
             const year = nowDate.getFullYear();
             const month = String(nowDate.getMonth() + 1).padStart(2, '0');
             const date = String(nowDate.getDate() + 3).padStart(2, '0');
+            console.log(date);
             const tomorrowDate = `${year}${month}${date}`;
 
             for (const item of arrUser) {
