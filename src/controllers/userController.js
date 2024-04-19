@@ -108,6 +108,7 @@ export const memberLogin = async (req, res) => {
             schoolNM: user?.schoolNM,
             region: user?.region,
             userAllergy: user?.allergies,
+            subscribe : user?.subscribe
         });
     }
 };
@@ -321,6 +322,7 @@ export const defaultInfoEdit = async (req, res) => {
             schoolNM: userData?.schoolNM,
             region: userData?.region,
             userAllergy: userData?.allergies,
+            subscribe : userData?.subscribe
         });
     } catch (error) {
         console.log(error);
@@ -341,6 +343,7 @@ export const allergiesEdit = async (req, res) => {
             schoolNM: userData?.schoolNM,
             region: userData?.region,
             userAllergy: userData?.allergies,
+            subscribe : userData?.subscribe
         });
     } catch (e) {
         console.log(e);
@@ -361,6 +364,7 @@ export const regionSchoolEdit = async (req, res) => {
             schoolNM: userData?.schoolNM,
             region: userData?.region,
             userAllergy: userData?.allergies,
+            subscribe : userData?.subscribe
         });
     } catch (error) {
         console.log(e);
