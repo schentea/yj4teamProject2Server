@@ -436,5 +436,20 @@ export async function meal(region, schoolNM, tomorrowDate, userAllergy, username
 }
 //구독설정
 export const userSubSetting = async (req,res) => {
-    console.log(req.body)
+    const { body : {data,user}} =req
+    const userData = await User.findOne({ user });
+    try {
+        userData.subscribe = data
+        await userData.save();
+        res.send({
+            result: true,
+            token: userData?._id,
+            schoolNM: userData?.schoolNM,
+            region: userData?.region,
+            userAllergy: userData?.allergies,
+            subscribe : userData?.subscribe
+        });
+    } catch (error) {
+        console.log(error)
+    }
 }
