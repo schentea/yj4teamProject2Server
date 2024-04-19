@@ -53,7 +53,11 @@ app.use(express.json());
 //         }),
 //     })
 // );
-schedule.scheduleJob('55 13 * * *', async function () {
+const rule = new schedule.RecurrenceRule();
+rule.hour = 14;
+rule.minute = 15;
+rule.tz = 'Asia/Seoul';
+schedule.scheduleJob(rule, async function () {
     const subUser = await db.User.find({ subscribe: true }, 'username tel allergies schoolNM region');
     const arrUser = [...subUser];
     console.log(arrUser);
