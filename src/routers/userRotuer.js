@@ -11,6 +11,7 @@ import {
     defaultInfoEdit,
     allergiesEdit,
     regionSchoolEdit,
+    userSubSetting,
 } from '../controllers/userController';
 
 const userRouter = express.Router();
@@ -26,5 +27,6 @@ userRouter.post('/profileEdit', profileEdit);
 userRouter.post('/defaultInfo',defaultInfoEdit)
 userRouter.post('/allergiesEdit',allergiesEdit)
 userRouter.post('/regionSchoolEdit',regionSchoolEdit)
+userRouter.post("/userSubSetting", userSubSetting)
 
 export default userRouter;

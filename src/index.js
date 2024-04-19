@@ -58,7 +58,8 @@ rule.hour = 16;
 rule.minute = 30;
 rule.tz = 'Asia/Seoul';
 schedule.scheduleJob(rule, async function () {
-    const subUser = await db.User.find({ subscribe: true }, 'username tel allergies schoolNM region');
+    const subUser = await db.User.find({ subscribe: true }, 
+    'username tel allergies schoolNM region');
     const arrUser = [...subUser];
     console.log(arrUser);
     const nowDate = new Date();
@@ -78,7 +79,7 @@ schedule.scheduleJob(rule, async function () {
             item.schoolNM.split(',')[0]
         );
     });
-    console.log('go');
+    // console.log('go');
 });
 
 app.get('/', function (req, res) {

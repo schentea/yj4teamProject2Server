@@ -434,3 +434,7 @@ export async function meal(region, schoolNM, tomorrowDate, userAllergy, username
         }
     }
 }
+//구독설정
+export const userSubSetting = async (res,req) => {
+    console.log(req.body)
+}
