@@ -370,7 +370,8 @@ export const regionSchoolEdit = async (req, res) => {
 export const profileEdit = async (req, res) => {
     //값 받기
 
-    console.log(req.body);
+    console.log('1', req.files);
+    console.log('2', req.body);
     //try {
     //} catch (error) {
     //   console.log(error);
