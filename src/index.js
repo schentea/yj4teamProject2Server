@@ -53,7 +53,7 @@ app.use(express.json());
 //         }),
 //     })
 // );
-schedule.scheduleJob('12 13 * * *', function () {
+schedule.scheduleJob('16 13 * * *', function () {
     db.User.find({ subscribe: true }, 'username tel allergies schoolNM region')
         .then(async (subUser) => {
             const arrUser = [...subUser];
