@@ -436,7 +436,7 @@ export async function meal(region, schoolNM, tomorrowDate, userAllergy, username
 }
 //구독설정
 export const userSubSetting = async (req,res) => {
-    const { data,user } =req.body
+    const { data,user } = await req.body
     console.log("asd",user)
     console.log("asd",data)
     const userData = await User.findOne({ userid :user });
