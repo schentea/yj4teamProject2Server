@@ -441,7 +441,7 @@ export const userSubSetting = async (req,res) => {
     console.log("asd",data)
     const userData = await User.findOne({ user });
     console.log("asd1",userData)
-    console.log("asd2",userData.subscribe)
+    console.log("asd2",userData?.subscribe)
     try {
         userData.subscribe = data
         await userData.save();
