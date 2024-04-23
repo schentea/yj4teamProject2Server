@@ -441,7 +441,7 @@ export const userSubSetting = async (req, res) => {
         console.log('asd', user);
         console.log('asd', subState);
         const userData = await User.findOne({ userid: user });
-        userData.subscribe = data;
+        userData.subscribe = subState;
         await userData.save();
         res.send({
             result: true,
