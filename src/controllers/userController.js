@@ -3,6 +3,7 @@ import User from '../models/user';
 import bcrypt from 'bcryptjs';
 import { SolapiMessageService } from 'solapi';
 
+const FROMTEL = process.env.FROMTEL;
 const PFID = process.env.PFID;
 const TID = process.env.TID;
 const PFID2 = process.env.PFID2;
@@ -153,13 +154,13 @@ export const allergyAlim = async (req, res) => {
     try {
         const response = await messageService.send({
             to: tel,
-            from: '01033528779', // 계정에서 등록한 발신번호 입력.
+            from: FROMTEL, // 계정에서 등록한 발신번호 입력.
             kakaoOptions: {
                 pfId: PFID,
                 templateId: TID,
                 variables: {
                     '#{name}': username,
-                    '#{링크}': 'www.naver.com',
+                    '#{링크}': 'kidcare.netlify.app',
                 },
                 disableSms: true, // 필요에 따라 disableSms 옵션 사용
             },
@@ -415,7 +416,7 @@ export async function meal(region, schoolNM, tomorrowDate, userAllergy, username
         try {
             const response = await messageService.send({
                 to: tel,
-                from: '01033528779', // 계정에서 등록한 발신번호 입력.
+                from: FROMTEL, // 계정에서 등록한 발신번호 입력.
                 kakaoOptions: {
                     pfId: PFID2,
                     templateId: TID2,
@@ -440,17 +441,45 @@ export const userSubSetting = async (req, res) => {
         const { subState, user } = req.body;
         console.log('asd', user);
         console.log('asd', subState);
-        const userData = await User.findOne({ userid: user });
-        userData.subscribe = subState;
-        await userData.save();
-        res.send({
-            result: true,
-            token: userData?._id,
-            schoolNM: userData?.schoolNM,
-            region: userData?.region,
-            userAllergy: userData?.allergies,
-            subscribe: userData?.subscribe,
-        });
+        if (subState === true) {
+            const userData = await User.findOne({ userid: user });
+            userData.subscribe = subState;
+            await userData.save();
+            res.send({
+                result: true,
+                token: userData?._id,
+                schoolNM: userData?.schoolNM,
+                region: userData?.region,
+                userAllergy: userData?.allergies,
+                subscribe: userData?.subscribe,
+            });
+            const response = await messageService.send({
+                to: userData.tel,
+                from: FROMTEL, // 계정에서 등록한 발신번호 입력.
+                kakaoOptions: {
+                    pfId: PFID,
+                    templateId: TID,
+                    variables: {
+                        '#{name}': userData.username,
+                        '#{링크}': 'kidcare.netlify.app',
+                    },
+                    disableSms: true, // 필요에 따라 disableSms 옵션 사용
+                },
+            });
+            // res.json({ success: true, message: '알림톡 전송 성공', data: response });
+        } else {
+            const userData = await User.findOne({ userid: user });
+            userData.subscribe = subState;
+            await userData.save();
+            res.send({
+                result: true,
+                token: userData?._id,
+                schoolNM: userData?.schoolNM,
+                region: userData?.region,
+                userAllergy: userData?.allergies,
+                subscribe: userData?.subscribe,
+            });
+        }
     } catch (error) {
         console.log(error);
     }
