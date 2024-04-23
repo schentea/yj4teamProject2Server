@@ -108,7 +108,7 @@ export const memberLogin = async (req, res) => {
             schoolNM: user?.schoolNM,
             region: user?.region,
             userAllergy: user?.allergies,
-            subscribe : user?.subscribe
+            subscribe: user?.subscribe,
         });
     }
 };
@@ -322,7 +322,7 @@ export const defaultInfoEdit = async (req, res) => {
             schoolNM: userData?.schoolNM,
             region: userData?.region,
             userAllergy: userData?.allergies,
-            subscribe : userData?.subscribe
+            subscribe: userData?.subscribe,
         });
     } catch (error) {
         console.log(error);
@@ -343,7 +343,7 @@ export const allergiesEdit = async (req, res) => {
             schoolNM: userData?.schoolNM,
             region: userData?.region,
             userAllergy: userData?.allergies,
-            subscribe : userData?.subscribe
+            subscribe: userData?.subscribe,
         });
     } catch (e) {
         console.log(e);
@@ -364,7 +364,7 @@ export const regionSchoolEdit = async (req, res) => {
             schoolNM: userData?.schoolNM,
             region: userData?.region,
             userAllergy: userData?.allergies,
-            subscribe : userData?.subscribe
+            subscribe: userData?.subscribe,
         });
     } catch (error) {
         console.log(error);
@@ -435,15 +435,13 @@ export async function meal(region, schoolNM, tomorrowDate, userAllergy, username
     }
 }
 //구독설정
-export const userSubSetting = async (req,res) => {
-   
-    
+export const userSubSetting = async (req, res) => {
     try {
-        const { data,user } = req.body
-    console.log("asd",user)
-    console.log("asd",data)
-    const userData = await User.findOne({ userid :user });
-        userData.subscribe = data
+        const { subState, user } = req.body;
+        console.log('asd', user);
+        console.log('asd', subState);
+        const userData = await User.findOne({ userid: user });
+        userData.subscribe = data;
         await userData.save();
         res.send({
             result: true,
@@ -451,9 +449,9 @@ export const userSubSetting = async (req,res) => {
             schoolNM: userData?.schoolNM,
             region: userData?.region,
             userAllergy: userData?.allergies,
-            subscribe : userData?.subscribe
+            subscribe: userData?.subscribe,
         });
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-}
+};
