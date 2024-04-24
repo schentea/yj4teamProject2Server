@@ -165,16 +165,14 @@ export const allergyAlim = async (req, res) => {
                 disableSms: true, // 필요에 따라 disableSms 옵션 사용
             },
         });
-        res.json({ success: true, message: '알림톡 전송 성공', data: response, 
-        data2 :{
+        res.send({
             result: true,
             token: userData?._id,
             schoolNM: userData?.schoolNM,
             region: userData?.region,
             userAllergy: userData?.allergies,
-            subscribe: userData?.subscribe, 
-        }
-    });
+            subscribe: userData?.subscribe,
+        });
     } catch (e) {
         console.log(e);
     }
